@@ -1,37 +1,31 @@
 <?php 
-include('../../config/config.php');
+include('../../Config/Config.php');
 $pelicula = new pelicula($conexion);
 
 $proceso = '';
 if( isset($_GET['proceso']) && strlen($_GET['proceso'])>0 ){
-    $proceso = $_GET['proceso'];
+	$proceso = $_GET['proceso'];
 }
 $pelicula->$proceso( $_GET['pelicula'] );
 print_r(json_encode($pelicula->respuesta));
 
 class pelicula{
-    private $dato = array(), $db;
+    private $datos = array(), $db;
     public $respuesta = ['msg'=>'correcto'];
-
+    
     public function __construct($db){
         $this->db=$db;
     }
-    public function recibirDatos($peliculas){
+    public function recibirDatos($pelicula){
         $this->datos = json_decode($pelicula, true);
         $this->validar_datos();
     }
     private function validar_datos(){
-        if( empty($this->datos['nombre']) ){
-            $this->respuesta['msg'] = 'Nombre de la pelicula';
+        if( empty($this->datos['descripcion']) ){
+            $this->respuesta['msg'] = 'por favor ingrese la descripcion de la pelicula';
         }
         if( empty($this->datos['sinopsis']) ){
-            $this->respuesta['msg'] = 'Sinopsis de la pelicula';
-        }
-        if( empty($this->datos['genero']) ){
-            $this->respuesta['msg'] = 'Genero de la pelicula';
-        }
-        if( empty($this->datos['duracion']) ){
-            $this->respuesta['msg'] = 'Duracion de la pelicula';
+            $this->respuesta['msg'] = 'por favor ingrese la sinopsis de la pelicula';
         }
         $this->almacenar_pelicula();
     }
@@ -39,32 +33,32 @@ class pelicula{
         if( $this->respuesta['msg']==='correcto' ){
             if( $this->datos['accion']==='nuevo' ){
                 $this->db->consultas('
-                    INSERT INTO pelicula (nombre,sinopsis,genero,duracion) VALUES(
-                        "'. $this->datos['nombre'] .'",
+                    INSERT INTO peliculas (descripcion,sinopsis,genero,duracion) VALUES(
+                        "'. $this->datos['descripcion'] .'",
                         "'. $this->datos['sinopsis'] .'",
                         "'. $this->datos['genero'] .'",
-                        "'. $this->datos['duracion'] .'",
+                        "'. $this->datos['duracion'] .'"
                     )
                 ');
-                $this->respuesta['msg'] = 'El registro fue guardado exitosamente'
+                $this->respuesta['msg'] = 'Registro insertado correctamente';
             } else if( $this->datos['accion']==='modificar' ){
                 $this->db->consultas('
-                   UPDATE pelicula SET 
-                        nombre  = "'. $this->datos['nombre'] .'",
-                        sinopsis = "'. $this->datos['sinopsis'] .'",
+                   UPDATE peliculas SET
+                        descripcion     = "'. $this->datos['descripcion'] .'",
+                        sinopsis  = "'. $this->datos['sinopsis'] .'",
                         genero  = "'. $this->datos['genero'] .'",
-                        duracion  = "'. $this->datos['duracion'] .'",
-                    WHERE idPelicula = "'. $this->datos['idPeicula'] .'",
+                        duracion   = "'. $this->datos['duracion'] .'"
+                    WHERE idPelicula = "'. $this->datos['idPelicula'] .'"
                 ');
-                $this->respuesta['msg'] = 'El registro fue actualizado exitosamente'
+                $this->respuesta['msg'] = 'Registro actualizado correctamente';
             }
         }
     }
     public function buscarPelicula($valor=''){
         $this->db->consultas('
-            select peliculas.idPelicula, peliculas.nombre, peliculas.sinopsis, peliculas.genero, peliculas.duracion
+            select peliculas.idPelicula, peliculas.descripcion, peliculas.sinopsis, peliculas.genero, peliculas.duracion
             from peliculas
-            where peliculas.nombre like "%'.$valor.'%" or peliculas.genero like "%'.$valor.'%"
+            where peliculas.descripcion like "%'.$valor.'%" or peliculas.genero like "%'.$valor.'%" or peliculas.duracion like "%'.$valor.'%"
         ');
         return $this->respuesta = $this->db->obtener_datos();
     }
@@ -74,8 +68,7 @@ class pelicula{
             from peliculas
             where peliculas.idPelicula = "'.$idPelicula.'"
         ');
-        $this->respuesta['msg'] = 'El registro se elimino exitosamente'
+        $this->respuesta['msg'] = 'Registro eliminado correctamente';
     }
 }
-
 ?>
