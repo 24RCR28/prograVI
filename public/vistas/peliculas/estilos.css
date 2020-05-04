@@ -8,7 +8,7 @@ body{
     background-image: url('fondo.jpg');
 }
 
-.form-cliente{
+.form-pelicula{
     width: 400px;
     background: #067fafef;
     padding: 30px;
@@ -19,7 +19,7 @@ body{
     color: rgb(255, 255, 255);
 }
 
-.form-cliente h4{
+.form-pelicula h4{
     font-size: 22px;
     margin-bottom: 20px;
 }
@@ -35,13 +35,13 @@ body{
     font-size: 18px;
 }
 
-.form-cliente p{
+.form-pelicula p{
     height: 40px;
     text-align: center;
     font-size: 19px;
 }
 
-.form-cliente .botons{
+.form-pelicula .botons{
     width: 100px;
     background: #1f53c5;
     border: none;
