@@ -1,6 +1,4 @@
 <?php
-
-include('../../conexion/DB.php');
-$conexion = new conexion('localhost','root','','db_segundo_parcial');
-
+include('../../Conexion/DB.php');
+$conexion = new DB('localhost','root','','db_segundo_parcial');
 ?>

@@ -1,26 +1,26 @@
-var appBuscarClientes = new Vue({
-    el:'#frm-buscar-clientes',
-    data:{
-        misclientes:[], 
-        valor:''
+var appbuscar_clientes = new Vue({
+    el: '#frm-buscar-clientes',
+    data: {
+        mis_clientes: [],
+        valor: ''
     },
-    methods:{
-        buscarCliente:function(){
-            fetch(`private/Modulos/clientes/procesos.php?proceso=buscarCliente&cliente=${this.valor}`).then(resp=>resp.json()).then(resp=>{
-                this.misclientes = resp;
+    methods: {
+        buscarCliente() {
+            fetch(`private/Modulos/clientes/procesos.php?proceso=buscarCliente&cliente=${this.valor}`).then(resp => resp.json()).then(resp => {
+                this.mis_clientes = resp;
             });
         },
-        modificarCliente:function(cliente){
-            appcliente.cliente = cliente;
-            appcliente.cliente.accion = 'modificar';
+        modificarCliente(cliente) {
+            appclientes.cliente = cliente;
+            appclientes.cliente.accion = 'modificar';
         },
-        eliminarCliente:function(idCliente){
-            fetch(`private/Modulos/clientes/procesos.php?proceso=eliminarCliente&cliente=${idCliente}`).then(resp=>resp.json()).then(resp=>{
+        eliminarCliente(idCliente) {
+            fetch(`private/Modulos/clientes/procesos.php?proceso=eliminarCliente&cliente=${idCliente}`).then(resp => resp.json()).then(resp => {
                 this.buscarCliente();
             });
         }
     },
-    created:function(){
+    created() {
         this.buscarCliente();
     }
 });
