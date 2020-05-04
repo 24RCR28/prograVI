@@ -1,26 +1,26 @@
-var appBuscarPeliculas = new Vue({
-    el:'#frm-buscar-peliculas',
-    data:{
-        mispeliculas:[], 
-        valor:'' 
+var appbuscar_peliculas = new Vue({
+    el: '#frm-buscar-peliculas',
+    data: {
+        mis_peliculas: [],
+        valor: ''
     },
-    methods:{
-        buscarPelicula:function(){
-            fetch(`private/Modulos/peliculas/procesos.php?proceso=buscarPelicula&pelicula=${this.valor}`).then(resp=>resp.json()).then(resp=>{
-                this.mispeliculas = resp;
+    methods: {
+        buscarPeliculas() {
+            fetch(`private/Modulos/peliculas/procesos.php?proceso=buscarpeliculas&pelicula=${this.valor}`).then(resp => resp.json()).then(resp => {
+                this.mis_peliculas = resp;
             });
         },
-        modificarPelicula:function(pelicula){
-            apppelicula.pelicula = pelicula;
-            apppelicula.pelicula.accion = 'modificar';
+        modificarPelicula(pelicula) {
+            appPeliculas.pelicula = pelicula;
+            appPeliculas.pelicula.accion = 'modificar';
         },
-        eliminarPelicula:function(idPelicula){
-            fetch(`private/Modulos/peliculas/procesos.php?proceso=eliminarPelicula&pelicula=${idPelicula}`).then(resp=>resp.json()).then(resp=>{
-                this.buscarPelicula();
+        eliminarPelicula(idPelicula) {
+            fetch(`private/Modulos/peliculas/procesos.php?proceso=eliminarPelicula&pelicula=${idPelicula}`).then(resp => resp.json()).then(resp => {
+                this.buscarPeliculas();
             });
         }
     },
-    created:function(){
-        this.buscarPelicula();
+    created() {
+        this.buscarPeliculas();
     }
 });

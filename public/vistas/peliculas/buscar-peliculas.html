@@ -1,18 +1,19 @@
-<form method="POST" id="frm-buscar-peliculas">
+<form method="post" id="frm-buscar-peliculas">
     <div class="card text-white bg-dark mb-3" style="max-width: 48rem;">
-        <div class="car-header">
-            BUSQUEDA DE PELICULAS 
+        <div class="card-header">
+            BUSQUEDA DE PELICULAS
 
             <button type="button" id="btn-close-buscar-peliculas" class="close" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="card-body">
-            <table id="tbl-buscar-peliculas" class="table-striped table-dark table-bordered table-hover">
+            <table id="tbl-buscar-docentes" class="table-striped table-dark table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th colspan="5">
-                            <input type="text" v-model="valor" v-on:keyup="buscarPelicula" placeholder="Descripcion, Genero o Duracion" class="form-control">
+                        <th colspan="7">
+                            <input type="text" v-model="valor" v-on:keyup="buscarPeliculas"
+                                placeholder="descripcion, sinopsis o genero" class="form-control">
                         </th>
                     </tr>
                     <tr>
@@ -24,13 +25,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="pelicula in mispeliculas" :key="pelicula.idPelicula" v-on:click="modificarPelicula(pelicula)">
-                        <td>{{ pelicula.descripcion }}</td>
-                        <td>{{ pelicula.sinopsis }}</td>
-                        <td>{{ pelicula.genero }}</td>
-                        <td>{{ pelicula.duracion }}</td>
+                    <tr v-for="mi_pelicula in mis_peliculas" :key="mi_pelicula.idPelicula"
+                        v-on:click="modificarPelicula(mi_pelicula)">
+                        <td>{{ mi_pelicula.descripcion }}</td>
+                        <td>{{ mi_pelicula.sinopsis }}</td>
+                        <td>{{ mi_pelicula.genero }}</td>
+                        <td>{{ mi_pelicula.duracion }}</td>
                         <td>
-                            <input v-on:click="eliminarPelicula(pelicula.idPelicula)" type="button" class="btn btn-outline-danger text-white" value="del">
+                            <input v-on:click="eliminarPelicula(mi_pelicula.idPelicula)" type="button"
+                                class="btn btn-outline-danger text-white" value="del">
                         </td>
                     </tr>
                 </tbody>
